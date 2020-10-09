@@ -8,4 +8,6 @@ export interface Article {
   title: string;
   image_data: string;
   image_media_type: string;
+  thumbnail_image: string;
+  thumbnail_media_type: string;
 }

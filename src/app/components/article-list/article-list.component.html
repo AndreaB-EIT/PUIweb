@@ -5,10 +5,43 @@
         </h1>
     </div>
 
-    <div class="container-fluid bg-light">
+    <div class="container-fluid">
         <div class="d-flex">
             <div class="mr-auto p-2">
-                Left
+                <div *ngIf='!mobile' class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="categoryFilter">
+                    <label ngbButtonLabel class="btn-primary">
+                        <input ngbButton type="radio" value="All"> All
+                    </label>
+                    <label ngbButtonLabel class="btn-primary">
+                        <input ngbButton type="radio" value="National"> National
+                    </label>
+                    <label ngbButtonLabel class="btn-primary">
+                        <input ngbButton type="radio" value="Economy"> Economy
+                    </label>
+                    <label ngbButtonLabel class="btn-primary">
+                        <input ngbButton type="radio" value="Sports"> Sports
+                    </label>
+                    <label ngbButtonLabel class="btn-primary">
+                        <input ngbButton type="radio" value="Technology"> Technology
+                    </label>
+                </div>
+                <!-- <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary active">
+                        <input type="radio" name="options" checked> All
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="options"> National
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="options"> Economy
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="options"> Sports
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="options"> Technology
+                    </label>
+                </div> -->
             </div>
             <div class="p-2">
                 <div class="input-group">
@@ -29,13 +62,14 @@
             </div> -->
         </div>
     </div>
-
+<hr>
     <div class="row justify-content-center">
-        <div class="col-sm-4 col-12 my-3" *ngFor='let article of articlesList | filter:term'>
+        <div class="col-sm-4 col-12 my-3" 
+            *ngFor='let article of articlesList | categoryPipe:categoryFilter | filter:term'>
             <div class="card bg-light">
                 <img class="card-img-top" src="..." alt="Card image cap"/>
                 <div class="card-body">
-                    <h5 class="card-title">{{ article.title }}</h5>
+                    <h5 class="card-title"><a>{{ article.title }}</a></h5>
                     <p class="card-text"><b>{{ article.category }}</b></p>
                     <p class="card-text">{{ article.abstract }}</p>
                     <button (click)="editArticle(article.id)" class="btn btn-primary">Edit</button>

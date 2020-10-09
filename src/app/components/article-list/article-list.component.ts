@@ -10,8 +10,10 @@ import { NewsService } from 'src/app/services/news.service';
 })
 export class ArticleListComponent implements OnInit {
 
-  private articlesList: Article[];
-  private term = '';
+  public articlesList: Article[];
+  public term = '';
+  public categoryFilter = 'All';
+  public mobile: boolean;
 
   constructor(private ns: NewsService) { }
 
@@ -19,9 +21,5 @@ export class ArticleListComponent implements OnInit {
     this.ns.articlesList.subscribe(articles => {
       this.articlesList = articles;
     });
-
   }
-
-
-
 }

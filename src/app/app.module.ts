@@ -10,6 +10,8 @@ import { ArticleDetailsComponent } from './components/article-details/article-de
 import { ArticleEditionComponent } from './components/article-edition/article-edition.component';
 import { ArticleListComponent } from './components/article-list/article-list.component';
 import { LoginComponent } from './components/login/login.component';
+import { FormsModule } from '@angular/forms';
+import { CategoryPipePipe } from './pipes/category-pipe.pipe';
 
 @NgModule({
   declarations: [
@@ -17,13 +19,15 @@ import { LoginComponent } from './components/login/login.component';
     ArticleDetailsComponent,
     ArticleEditionComponent,
     ArticleListComponent,
-    LoginComponent
+    LoginComponent,
+    CategoryPipePipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     Ng2SearchPipeModule,
     HttpClientModule,
+    FormsModule,
     NgbModule
     //NgbModule.forRoot()
   ],
