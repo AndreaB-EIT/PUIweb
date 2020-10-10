@@ -9,20 +9,21 @@ import { DomSanitizer } from '@angular/platform-browser';
   templateUrl: './article-list.component.html',
   styleUrls: ['./article-list.component.css']
 })
+
 export class ArticleListComponent implements OnInit {
 
   public articlesList: Article[];
   public term = '';
   public categoryFilter = 'All';
-  public mobile: boolean;
-  public imagePaths = [];
+  public isMenuCollapsed = true;
+  // public imagePaths = [];
+  // public imageError: string;
 
   constructor(private ns: NewsService, private _sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.ns.articlesList.subscribe(articles => {
       this.articlesList = articles;
-      console.log(this.articlesList)
     });
     
     // for(let i = 0; i < this.articlesList.length; i++)
@@ -36,6 +37,7 @@ export class ArticleListComponent implements OnInit {
   }
   
 
+  // WIP Images loading
   // fileChangeEvent(fileInput: any) {
   //   this.imageError = null;
   //   if (fileInput.target.files && fileInput.target.files[0]) {
