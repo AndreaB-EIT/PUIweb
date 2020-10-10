@@ -1,8 +1,9 @@
 export interface Article {
   id: number;
-  id_user: string;
+  id_user: string; // Who wrote the article
   abstract: string;
   subtitle: string;
+  body: string;
   update_date: string;
   category: string;
   title: string;

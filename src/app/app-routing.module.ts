@@ -11,7 +11,7 @@ const routes: Routes = [
   {path: 'article-list', component: ArticleListComponent},
   {path: 'article', component: ArticleDetailsComponent},
   {path: 'edit', component: ArticleEditionComponent},
-  {path: 'new', component: ArticleEditionComponent},
+  {path: 'new', redirectTo: '/edit', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
 ];
 

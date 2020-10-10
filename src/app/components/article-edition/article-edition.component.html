@@ -1,1 +1,163 @@
-<p>article-edition works!</p>
+<div class="container">
+    <div class="jumbotron">
+        <h1>Article editor</h1>
+    </div>
+
+    <div>
+
+        <!-- 
+
+            id: number; // from calling the newArticle function
+            id_user: string; // from calling the newArticle function
+            update_date: string; // auto
+            image_data: string;
+            image_media_type: string;
+            thumbnail_image: string;
+            thumbnail_media_type: string;
+
+         -->
+
+        <form #articleForm="ngForm" (ngSubmit)="submitArticle()">
+            <p>The fields with an asterisk (*) are required.</p>
+            <div class="form-group mb-4">
+                <label>Title *</label>
+                  <input class="form-control"
+                         type="text"
+                         required
+                         [(ngModel)]="tmpArticle.title"
+                         name="title"
+                         #title="ngModel"
+                         [ngClass]="title.valid || title.pristine ? '': 'bg-danger text-white'">
+                <div class="alert alert-danger" *ngIf="title.touched && !title.valid">
+                    <div *ngIf="title.errors.required">Sorry, a title is required.</div>
+                    <!-- <div *ngIf="title.errors.pattern">The sender email does not match the email pattern.</div> -->
+                </div>
+            </div>
+            <div class="form-group mb-4">
+                <label>Category *</label>
+                <select class="form-control" name="category" [(ngModel)]="tmpArticle.category" required>
+                    <option>National</option>
+                    <option>Economy</option>
+                    <option>Sports</option>
+                    <option>Technology</option>
+                </select>
+            </div>
+            <div class="form-group mb-4">
+                <label>Subtitle *</label>
+                  <input class="form-control"
+                         type="text"
+                         required
+                         [(ngModel)]="tmpArticle.subtitle"
+                         name="subtitle"
+                         #subtitle="ngModel"
+                         [ngClass]="subtitle.valid || subtitle.pristine ? '': 'bg-danger text-white'">
+                <div class="alert alert-danger" *ngIf="subtitle.touched && !subtitle.valid">
+                    <div *ngIf="subtitle.errors.required">Sorry, a subtitle is required.</div>
+                    <!-- <div *ngIf="subtitle.errors.pattern">The sender email does not match the email pattern.</div> -->
+                </div>
+            </div>
+            <div class="form-group mb-4">
+                <label>Abstract *</label>
+                  <input class="form-control mb-2"
+                         type="text"
+                         required
+                         [(ngModel)]="tmpArticle.abstract"
+                         name="abstract"
+                         #abstract="ngModel"
+                         [ngClass]="abstract.valid || abstract.pristine ? '': 'bg-danger text-white'">
+                <div class="alert alert-danger" *ngIf="abstract.touched && !abstract.valid">
+                    <div *ngIf="abstract.errors.required">Sorry, an abstract is required.</div>
+                    <div *ngIf="abstract.errors.pattern">The sender email does not match the email pattern.</div>
+                </div>
+            </div>
+            <div class="form-group mb-4">
+                <label>Body *</label>
+                  <textarea class="form-control mb-2"
+                         type="text"
+                         required
+                         [(ngModel)]="tmpArticle.body"
+                         name="body"
+                         #body="ngModel"
+                         [ngClass]="body.valid || body.pristine ? '': 'bg-danger text-white'"></textarea>
+                <div class="alert alert-danger" *ngIf="body.touched && !body.valid">
+                    <div *ngIf="body.errors.required">Sorry, a body is required.</div>
+                    <div *ngIf="body.errors.pattern">The sender email does not match the email pattern.</div>
+                </div>
+            </div>
+            <!-- <button
+                  class="btn btn-primary"
+                  (click)="askConfirmation = !askConfirmation"
+                  [disabled]="!articleForm.form.valid">
+                  Submit article
+            </button> -->
+            <div class="form-group">
+              <button
+                    class="btn btn-primary"
+                    type="submit"
+                    [disabled]="!articleForm.form.valid">
+                    Submit article
+              </button>
+              <!-- <div class="input-group mt-2" *ngIf="askConfirmation">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Are you sure?</span>
+                </div>
+                <button type="submit" class="btn btn-primary">Yes, I'm sure. Submit this article</button>
+              </div> -->
+            </div>
+        </form>
+        <!-- <form #emailForm="ngForm" (ngSubmit)="submitEmail()">
+            <p>The fields with an asterisk (*) are required.</p>
+            <div class="form-group">
+              <label>From *
+                <input class="form-control mb-2"
+                       type="text"
+                       required
+                       [(ngModel)]="email.from"
+                       name="from"
+                       #from="ngModel"
+                       [ngClass]="from.valid || from.pristine ? '': 'bg-danger text-white'"
+                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                </label>
+              <div class="alert alert-danger" *ngIf="from.touched && !from.valid">
+                <div *ngIf="from.errors.required">Sorry, a sender email is required.</div>
+                <div *ngIf="from.errors.pattern">The sender email does not match the email pattern.</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Subject *
+                <input class="form-control mb-2"
+                       type="text"
+                       required
+                       [(ngModel)]="email.subject"
+                       name="subject"
+                       #subject="ngModel"
+                       [ngClass]="subject.valid || subject.pristine ? '': 'bg-danger text-white'"
+                       pattern="[a-zA-Z0-9. %+-_]{1,50}">
+              </label>
+              <div class="alert alert-danger" *ngIf="subject.touched && !subject.valid">
+                <div *ngIf="subject.errors.required">Sorry, a subject is required.</div>
+                <div *ngIf="subject.errors.pattern">The subject can't be longer than 50 characters.</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Body
+              <input class="form-control mb-4"
+                     type="text"
+                     [(ngModel)]="email.body"
+                     name="body"
+                     #body="ngModel">
+              </label>
+            </div>
+          
+            <div class="text-left">
+              <button
+                class="btn btn-primary btn-sm mr-1"
+                type="submit"
+                [disabled]="!emailForm.form.valid">
+                Create email
+              </button>
+            </div>
+          
+          </form>           -->
+    </div>
+</div>

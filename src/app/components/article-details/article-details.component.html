@@ -1,1 +1,30 @@
-<p>article-details works!</p>
+<div class="container">
+    <div class="jumbotron">
+        <button class="btn btn-primary mb-3" (click)="goBack()">
+            Back
+        </button>
+
+        <h5>
+            {{ toView.category }}
+        </h5>
+        <h1>
+            {{ toView.title }}
+        </h1>
+        <h4>
+            {{ toView.subtitle }}
+        </h4>
+    </div>
+
+    // pic
+
+    <div>
+        <p>
+            {{ toView.body }}
+        </p>
+        <hr>
+        <p>
+            Last updated by {{ toView.id_user }} on {{ toView.update_date }}
+        </p>
+
+    </div>
+</div>

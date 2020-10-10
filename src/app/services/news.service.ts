@@ -15,8 +15,9 @@ export class NewsService {
   private articleUrl = 'http://sanger.dia.fi.upm.es/pui-rest-news/article';  // URL to web api
 
   public articlesList = this.getArticles();
-  private tmpArticle: Article; // when editing/creating an article
-
+  public tmpArticle: Article; // when editing/creating an article
+  public tmpViewArticle: Observable<Article>; // when viewing an article's details
+  
   constructor(private http: HttpClient) { }
 
   // Set the corresponding APIKEY accordig to the received by email
@@ -29,6 +30,10 @@ export class NewsService {
       Authorization: 'PUIRESTAUTH apikey=' + this.APIKEY_ANON
     })
   };
+
+  viewArticle(id: number): void {
+    this.tmpViewArticle = this.getArticle(id);
+  }
 
   // Modifies the APIKEY with the received value
   setUserApiKey(apikey: string): void {
@@ -60,14 +65,15 @@ export class NewsService {
     return this.http.get<Article[]>(this.newsUrl, this.httpOptions);
   }
 
-  test(): void {
-    // this.getArticles()[0].id == 0 ? ;
-  }
+  // PROTIP: ANY LOGGED USER CAN EDIT AND DELETE ANY ARTICLE
 
   deleteArticle(article: Article | number): Observable<Article> {
     const id = typeof article === 'number' ? article : article.id;
     const url = `${this.articleUrl}/${id}`;
     return this.http.delete<Article>(url, this.httpOptions);
+    // return this.http.delete<Article>(url, this.httpOptions).pipe(
+    //   catchError(this.handleError('deleteHero'))
+    // );;
   }
 
 
@@ -97,5 +103,18 @@ export class NewsService {
     console.log('Creating article');
     console.log(article);
     return this.http.post<Article>(this.articleUrl, article, this.httpOptions);
+  }
+
+  handleError(err: string): void {
+    switch(err) {
+      case 'deleteHero': {
+        alert('Error: ' + err);
+        break;
+      }
+      default: {
+        alert('I probably was NOT drunk while coding this if this just happened');
+        break;
+      }
+    }
   }
 }

@@ -6,8 +6,8 @@
     </div>
 
     <div class="container-fluid">
-        <div>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+        <div *ngIf="downloadComplete" class="mb-4">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3 border">
                 <h3 class="navbar-brand">Functions</h3>
                 <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
                     &#9776;
@@ -47,7 +47,7 @@
                         </li>
                         <li>
                             <div class="p-2">
-                                <button class="btn btn-primary">Create an article</button>
+                                <button class="btn btn-primary" (click)="newArticle()">Create an article</button>
                             </div>
                         </li>
                     </ul>
@@ -61,15 +61,27 @@
             *ngFor='let article of articlesList | categoryPipe:categoryFilter | filter:term'>
             <div class="card bg-light">
                 <!-- <img class="card-img-top" src="..." alt="Card image cap"/> -->
-                <img class="card-img-top" [src]="'data:' + article.thumbnail_media_type + ';base64,' + article.thumbnail_data ">
-                <!-- <img class="card-img-top" [src]="imagePath[article.id]"> -->
+                <!-- <img class="card-img-top" [src]="'data:' + article.thumbnail_media_type + ';base64,' + article.thumbnail_data "/> -->
+                <!-- <img class="card-img-top" [src]="imagePath[article.id]"/> -->
+                
+                <!-- Temporary, WIP -->
+                <img src="../../../assets/EITLogo.png" class="card-img-top img-fluid" alt="test" (click)="viewArticle(article.id)"/>
 
                 <div class="card-body">
-                    <h5 class="card-title"><a>{{ article.title }}</a></h5>
                     <p class="card-text"><b>{{ article.category }}</b></p>
+                    <h4 class="card-title"><a (click)="viewArticle(article.id)">{{ article.title }}</a></h4>
+                    <p class="card-text">Last updated by {{ article.id_user }} on {{ article.update_date }}</p>
                     <p class="card-text">{{ article.abstract }}</p>
-                    <button (click)="editArticle(article.id)" class="btn btn-primary">Edit</button>
-                    <button (click)="removeArticle(article.id)" class="btn btn-danger">Remove</button>
+                    <!-- <p class="card-text">{{ article.debugField }}</p> -->
+                    <button (click)="editArticle(article.id)" class="btn btn-primary mr-2">Edit article</button>
+                    <button (click)="askConfirmation[article.id] = !askConfirmation[article.id]" class="btn btn-danger">Remove article</button>
+                    <div class="input-group mt-2" *ngIf="askConfirmation[article.id]">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Are you sure?</span>
+                        </div>
+                        <!-- <input type="text" [(ngModel)]="term" name="term"/> -->
+                        <button (click)="removeArticle(article.id)" class="btn btn-danger">Yes, I'm sure. Delete this article</button>
+                    </div>
                 </div>
             </div>
         </div>
