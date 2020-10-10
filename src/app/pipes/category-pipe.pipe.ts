@@ -8,13 +8,25 @@ import { Article } from '../interfaces/article';
 })
 export class CategoryPipePipe implements PipeTransform {
 
-  transform(articlesList: Observable<Article[]>, categoryFilter: string): Observable<Article[]> {
+  transform(articlesList: Article[], categoryFilter: string): Article[] {
     
-    //let tmpArray = [];
+    if (categoryFilter!=='All')
+      return articlesList.filter(article => (article.category === categoryFilter));
+    else 
+      return articlesList;
     
-    //WIP
+    // let tmpArray = [];
+
+    // if(categoryFilter!=='All')
+    //   for(let i = 0; i < articlesList.length; i++) {
+    //     if(articlesList[i].category === categoryFilter)
+    //       tmpArray.push(articlesList[i]);
+    //   }
+    // else return articlesList;
     
-    return articlesList;
+    // return tmpArray;
+
+    // return articlesList;
 
     // articlesList.subscribe(articles => {
     //   //tmpArray = articles;

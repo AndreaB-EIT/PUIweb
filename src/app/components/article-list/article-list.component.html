@@ -67,7 +67,10 @@
         <div class="col-sm-4 col-12 my-3" 
             *ngFor='let article of articlesList | categoryPipe:categoryFilter | filter:term'>
             <div class="card bg-light">
-                <img class="card-img-top" src="..." alt="Card image cap"/>
+                <!-- <img class="card-img-top" src="..." alt="Card image cap"/> -->
+                <img class="card-img-top" [src]="'data:' + article.image_media_type + ';base64,' + article.image_data ">
+                <!-- <img class="card-img-top" [src]="imagePath[article.id]"> -->
+
                 <div class="card-body">
                     <h5 class="card-title"><a>{{ article.title }}</a></h5>
                     <p class="card-text"><b>{{ article.category }}</b></p>
