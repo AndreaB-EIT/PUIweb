@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Article } from 'src/app/interfaces/article';
 import { NewsService } from 'src/app/services/news.service';
-import { formatDate } from '@angular/common';
+import { formatDate, Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-article-edition',
@@ -16,7 +17,8 @@ export class ArticleEditionComponent implements OnInit {
 
   @ViewChild('articleForm') articleForm: any;
 
-  constructor(private ns: NewsService) { }
+  constructor(private ns: NewsService,
+              private location: Location) { }
 
   ngOnInit(): void {
     this.askConfirmation = false;
@@ -43,6 +45,10 @@ export class ArticleEditionComponent implements OnInit {
       console.log('Edited article: ' + this.tmpArticle.id + '; now:');
       console.log(this.tmpArticle);
     }
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
 }
