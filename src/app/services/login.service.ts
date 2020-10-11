@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../interfaces/user';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
@@ -35,6 +35,21 @@ export class LoginService {
     return this.http.post<User>(this.loginUrl, usereq).pipe(
       tap(user => {
         this.user = user;
+      }), catchError(err => {
+        // WIP
+        switch (err.status) {
+        //   case 401: {
+        //     alert('Wrong username or password!');
+        //   }
+        //   case 404: {
+        //     alert('Not found!');
+        //   }
+          default: {
+            alert(err.message);
+          }
+        }
+        // alert(err.message);
+        return throwError(err);
       })
     );
   }

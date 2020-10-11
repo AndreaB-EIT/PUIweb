@@ -47,16 +47,53 @@ export class ArticleEditionComponent implements OnInit {
       this.tmpArticle.thumbnail_image = '';
       this.tmpArticle.thumbnail_media_type = '';
 
-      console.log('Created article: ');
-      console.log(this.tmpArticle);
+      // todo: better error management
+      // also still doesn't work due to api stuff
+      // this.ns.createArticle(this.tmpArticle);
+      this.ns.createArticle(this.tmpArticle).subscribe(article => {
+          if(article === this.tmpArticle) {
+            alert('The operation was successful!');
+            // this.router.navigate(['/articles-list']);
+          }
+          else
+            alert('There was an issue somewhere');
+          
+          // this.router.navigate(['/articles-list']);
+      });
+      
     }
     else {
-      console.log('Edited article: ' + this.tmpArticle.id + '; now:');
-      console.log(this.tmpArticle);
+      
+      // this.ns.updateArticle(this.tmpArticle);
+      this.ns.updateArticle(this.tmpArticle).subscribe(article => {
+          if(article === this.tmpArticle) {
+            alert('The operation was successful!');
+            // this.router.navigate(['/articles-list']);
+          }
+          else
+            alert('There was an issue somewhere');
+          
+          // this.router.navigate(['/articles-list']);
+      });
+      // this.ns.updateArticle(this.tmpArticle).subscribe(output => {
+      //     switch (output.status) {
+      //       case 200: {
+      //         alert('The operation was successful!');
+      //       }
+      //       default: {
+      //         console.log('output')
+      //       }
+      //     }
+      // });
+      
+
+      //this.router.navigate(['/articles-list']);
     }
 
+    // this.router.navigate(['/articles-list']);
+
     // this.ns.getArticle(this.tmpArticle.id).subscribe(article => {
-    //   if(article === this.tmpArticle) { // except update date field
+    //   if(article === this.tmpArticle) {
     //     alert('The operation was successful!');
     //     this.router.navigate(['/articles-list']);
     //   }

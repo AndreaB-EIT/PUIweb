@@ -92,10 +92,13 @@ export class ArticleListComponent implements OnInit {
   }
   
   removeArticle(id: number): void {
-    // temporary for safety until we get the API keys:
-    alert('Bang! ' + id + ' just got blasted');
     // this.articlesList[this.findArticleInList(id)].is_deleted = 1;
-    // this.ns.deleteArticle(id);
+    if(typeof id === 'string')
+      id = parseInt(id);
+
+    this.ns.deleteArticle(id).subscribe(output => {
+      console.log(output);
+    });
   }
   
   findArticleInList(id: number): number {
@@ -121,26 +124,30 @@ export class ArticleListComponent implements OnInit {
 
   signIn(): void {
     
-    // this.ls.login(this.un, this.pw).subscribe(WonderOfU => {
-    //   this.user = WonderOfU; // https://jojo.fandom.com/wiki/Wonder_of_U
+    this.ls.login(this.un, this.pw).subscribe(WonderOfU => {
+      this.user = WonderOfU; // https://jojo.fandom.com/wiki/Wonder_of_U
       
-    //   if(this.ls.isLogged())
-    //     this.logged = true;
-    // });
+      if(this.ls.isLogged())
+        this.logged = true;
+      else {
+        alert('Wrong username or password!');
+      }
+    });
 
-    this.user = {
-      apikey: "xxx",
-      username: "test_username",
-      password: "test_pw"
-    };
+    // this.user = {
+    //   apikey: "xxx",
+    //   username: "test_username",
+    //   password: "test_pw"
+    // };
 
-    this.logged = true;
-    this.ls.user = this.user;
+    // this.logged = true;
+    // this.ls.user = this.user;
     
   }
   
   signOut(): void {
     
+    this.ls.logout();
     this.logged = false;
     this.user = null;
 

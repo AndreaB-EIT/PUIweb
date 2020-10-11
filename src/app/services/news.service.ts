@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Article } from '../interfaces/article';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -96,25 +96,73 @@ export class NewsService {
 
   updateArticle(article: Article): Observable<Article> {
     console.log('Updating article id=' + article.id);
-    return this.http.post<Article>(this.articleUrl, article, this.httpOptions);
+    return this.http.post<Article>(this.articleUrl, this.fix(article), this.httpOptions);
+    // return this.http.post<Article>(this.articleUrl, article, this.httpOptions).pipe(
+    //   tap(out => {
+    //     console.log(out);
+    //   }),
+    //   catchError(err => {
+    //     console.log(err.status)
+    //     switch (err.status) {
+    //       case 401: {
+    //         alert('Wrong username or password!');
+    //       }
+    //       case 404: {
+    //         alert('Not found!');
+    //       }
+    //       default: {
+    //         alert(err.message);
+    //       }
+    //     }
+    //     // alert(err.message);
+    //     return throwError(err);
+    //   })
+    // );
   }
 
   createArticle(article: Article): Observable<Article> {
     console.log('Creating article');
     console.log(article);
-    return this.http.post<Article>(this.articleUrl, article, this.httpOptions);
+    return this.http.post<Article>(this.articleUrl, this.fix(article), this.httpOptions);
+    // return this.http.post<Article>(this.articleUrl, article, this.httpOptions).pipe(
+    //   tap(out => {
+    //     console.log(out);
+    //   }),
+    //   catchError(err => {
+    //     console.log(err.status)
+    //     switch (err.status) {
+    //       case 401: {
+    //         alert('Wrong username or password!');
+    //       }
+    //       case 404: {
+    //         alert('Not found!');
+    //       }
+    //       default: {
+    //         alert(err.message);
+    //       }
+    //     }
+    //     // alert(err.message);
+    //     return throwError(err);
+    //   })
+    // );
   }
 
-  handleError(err: string): void {
-    switch(err) {
-      case 'deleteHero': {
-        alert('Error: ' + err);
-        break;
-      }
-      default: {
-        alert('I probably was NOT drunk while coding this if this just happened');
-        break;
-      }
-    }
+  fix(article: Article): Article {
+    delete article.id;
+    delete article.id_user;
+    return article;
   }
+
+  // handleError(err): void {
+  //   switch(err) {
+  //     case 'deleteHero': {
+  //       alert('Error: ' + err);
+  //       break;
+  //     }
+  //     default: {
+  //       alert('I probably was NOT drunk while coding this if this just happened');
+  //       break;
+  //     }
+  //   }
+  // }
 }
