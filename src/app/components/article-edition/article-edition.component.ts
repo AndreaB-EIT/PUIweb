@@ -66,14 +66,14 @@ export class ArticleEditionComponent implements OnInit {
       
       // this.ns.updateArticle(this.tmpArticle);
       this.ns.updateArticle(this.tmpArticle).subscribe(article => {
-          if(article === this.tmpArticle) {
-            alert('The operation was successful!');
-            // this.router.navigate(['/articles-list']);
-          }
-          else
-            alert('There was an issue somewhere');
+          // if(article === this.tmpArticle) {
+          //   alert('The operation was successful!');
+          //   this.router.navigate(['/articles-list']);
+          // }
+          // else
+          //   alert('There was an issue somewhere');
           
-          // this.router.navigate(['/articles-list']);
+          this.router.navigate(['/articles-list']);
       });
       // this.ns.updateArticle(this.tmpArticle).subscribe(output => {
       //     switch (output.status) {
@@ -83,7 +83,7 @@ export class ArticleEditionComponent implements OnInit {
       //       default: {
       //         console.log('output')
       //       }
-      //     }
+      //     } 
       // });
       
 
