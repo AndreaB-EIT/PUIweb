@@ -4,6 +4,8 @@ import { Article } from 'src/app/interfaces/article';
 import { NewsService } from 'src/app/services/news.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { User } from 'src/app/interfaces/user';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-article-list',
@@ -19,13 +21,21 @@ export class ArticleListComponent implements OnInit {
   public isMenuCollapsed = true;
   public askConfirmation = [];
   public downloadComplete = false;
+  public un = '';
+  public pw = '';
+  public logged = false;
+  public user: User;
   // public imagePaths = [];
   // public imageError: string;
 
   constructor(private ns: NewsService, 
-              private router: Router) { }
+              private router: Router,
+              private ls: LoginService) { }
 
   ngOnInit(): void {
+
+    this.user = this.ls.getUser();
+
     this.ns.articlesList.subscribe(articles => {
       this.articlesList = articles;
 
@@ -34,6 +44,12 @@ export class ArticleListComponent implements OnInit {
 
       this.downloadComplete = true;
     });
+
+    // this.user = {
+    //   apikey: 'xxx',
+    //   username: 'test',
+    //   password: 'test'
+    // };
 
     // for(let i = 0; i < this.articlesList.length; i++)
     //   this.imagePaths[this.articlesList[i].id] = 
@@ -101,14 +117,41 @@ export class ArticleListComponent implements OnInit {
         return i;
       }
     }
-  }  
+  }
+
+  signIn(): void {
+    
+    // this.ls.login(this.un, this.pw).subscribe(WonderOfU => {
+    //   this.user = WonderOfU; // https://jojo.fandom.com/wiki/Wonder_of_U
+      
+    //   if(this.ls.isLogged())
+    //     this.logged = true;
+    // });
+
+    this.user = {
+      apikey: "xxx",
+      username: "test_username",
+      password: "test_pw"
+    };
+
+    this.logged = true;
+    this.ls.user = this.user;
+    
+  }
+  
+  signOut(): void {
+    
+    this.logged = false;
+    this.user = null;
+
+  }
   
   // WIP Images loading
   
   // fileChangeEvent(fileInput: any) {
-    //   this.imageError = null;
-    //   if (fileInput.target.files && fileInput.target.files[0]) {
-      //     // Size Filter Bytes
+  //     this.imageError = null;
+  //     if (fileInput.target.files && fileInput.target.files[0]) {
+  //         // Size Filter Bytes
   //     const MAX_SIZE = 20971520;
   //     const ALLOWED_TYPES = ['image/png', 'image/jpeg'];
 

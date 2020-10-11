@@ -7,8 +7,8 @@ import { LoginComponent } from './components/login/login.component';
 import { ArticleListComponent } from './components/article-list/article-list.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/article-list', pathMatch: 'full'},
-  {path: 'article-list', component: ArticleListComponent},
+  {path: '', redirectTo: '/articles-list', pathMatch: 'full'},
+  {path: 'articles-list', component: ArticleListComponent},
   {path: 'article', component: ArticleDetailsComponent},
   {path: 'edit', component: ArticleEditionComponent},
   {path: 'new', redirectTo: '/edit', pathMatch: 'full'},

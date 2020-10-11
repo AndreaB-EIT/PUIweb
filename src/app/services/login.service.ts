@@ -10,7 +10,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 export class LoginService {
 
-  private user: User;
+  public user: User; // CHANGE BACK TO PRIVATE ONCE THE 401 IS NOT AN ISSUE ANYMORE
 
   private loginUrl = 'http://sanger.dia.fi.upm.es/pui-rest-news/login';
 
@@ -29,8 +29,8 @@ export class LoginService {
 
   login(name: string, pwd: string): Observable<User> {
     const usereq = new HttpParams()
-      .set('username', name)
-      .set('passwd', pwd);
+      .set('username', name) // us_4_1
+      .set('passwd', pwd); // 4414
 
     return this.http.post<User>(this.loginUrl, usereq).pipe(
       tap(user => {

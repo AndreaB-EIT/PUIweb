@@ -3,6 +3,29 @@
         <h1>
             EIT Newspaper
         </h1>
+        <div class="container-fluid">
+            <div *ngIf="!logged">
+                <div class="mr-auto p-2">
+                </div>
+                <div class="p-2">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text border-dark">Username</span>
+                        </div>
+                        <input type="text" [(ngModel)]="un" name="un"/>
+                        <div class="input-group-prepend ml-2">
+                            <span class="input-group-text border-dark">Password</span>
+                        </div>
+                        <input type="password" [(ngModel)]="pw" name="pw"/>
+                        <button class="btn btn-primary ml-2" (click)="signIn()">Sign in</button>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="logged">
+                Hello {{ user.username }}
+                <button class="btn btn-primary ml-2" (click)="signOut()">Sign out</button>
+            </div>
+        </div>
     </div>
 
     <div class="container-fluid">
@@ -45,7 +68,7 @@
                                 </div>
                             </div>
                         </li>
-                        <li>
+                        <li *ngIf="logged">
                             <div class="p-2">
                                 <button class="btn btn-primary" (click)="newArticle()">Create an article</button>
                             </div>
@@ -61,26 +84,30 @@
             *ngFor='let article of articlesList | categoryPipe:categoryFilter | filter:term'>
             <div class="card bg-light">
                 <!-- <img class="card-img-top" src="..." alt="Card image cap"/> -->
-                <!-- <img class="card-img-top" [src]="'data:' + article.thumbnail_media_type + ';base64,' + article.thumbnail_data "/> -->
+                <img class="card-img-top" [src]="'data:' + article.thumbnail_media_type + ';base64,' + article.thumbnail_data "/>
+                <!-- <input type="file" (change)="fileChangeEvent($event)"> -->
                 <!-- <img class="card-img-top" [src]="imagePath[article.id]"/> -->
                 
                 <!-- Temporary, WIP -->
-                <img src="../../../assets/EITLogo.png" class="card-img-top img-fluid" alt="test" (click)="viewArticle(article.id)"/>
+                <!-- <img src="../../../assets/EITLogo.png" class="card-img-top img-fluid" alt="test" (click)="viewArticle(article.id)"/> -->
 
                 <div class="card-body">
                     <p class="card-text"><b>{{ article.category }}</b></p>
                     <h4 class="card-title"><a (click)="viewArticle(article.id)">{{ article.title }}</a></h4>
-                    <p class="card-text">Last updated by {{ article.id_user }} on {{ article.update_date }}</p>
+                    <p class="card-text">{{ article.subtitle }}</p>
+                    <hr>
                     <p class="card-text">{{ article.abstract }}</p>
-                    <!-- <p class="card-text">{{ article.debugField }}</p> -->
-                    <button (click)="editArticle(article.id)" class="btn btn-primary mr-2">Edit article</button>
-                    <button (click)="askConfirmation[article.id] = !askConfirmation[article.id]" class="btn btn-danger">Remove article</button>
-                    <div class="input-group mt-2" *ngIf="askConfirmation[article.id]">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Are you sure?</span>
+                    <hr>
+                    <p class="card-text">Last updated by {{ article.id_user }} on {{ article.update_date }}</p>
+                    <div *ngIf="logged">
+                        <button (click)="editArticle(article.id)" class="btn btn-primary mr-2">Edit article</button>
+                        <button (click)="askConfirmation[article.id] = !askConfirmation[article.id]" class="btn btn-danger">Remove article</button>
+                        <div class="input-group mt-2" *ngIf="askConfirmation[article.id]">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Are you sure?</span>
+                            </div>
+                            <button (click)="removeArticle(article.id)" class="btn btn-danger">Yes, I'm sure. Delete this article</button>
                         </div>
-                        <!-- <input type="text" [(ngModel)]="term" name="term"/> -->
-                        <button (click)="removeArticle(article.id)" class="btn btn-danger">Yes, I'm sure. Delete this article</button>
                     </div>
                 </div>
             </div>
