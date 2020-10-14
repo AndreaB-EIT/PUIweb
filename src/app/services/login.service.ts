@@ -37,15 +37,19 @@ export class LoginService {
         this.user = user;
       }), catchError(err => {
         // WIP
+        console.log(err.status);
         switch (err.status) {
           case 401: {
             alert('Wrong username or password!');
+            break;
           }
           case 404: {
             alert('Not found!');
+            break;
           }
           default: {
             alert(err.message);
+            break;
           }
         }
         // alert(err.message);

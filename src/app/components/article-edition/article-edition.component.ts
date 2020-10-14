@@ -41,25 +41,32 @@ export class ArticleEditionComponent implements OnInit {
     this.tmpArticle.update_date = formatDate(now, 'yyyy-MM-dd HH:mm:ss', 'es');
 
     if(this.isItNew) {
-
       this.tmpArticle.image_data = '';
       this.tmpArticle.image_media_type = '';
       this.tmpArticle.thumbnail_image = '';
       this.tmpArticle.thumbnail_media_type = '';
 
       // todo: better error management
-      // also still doesn't work due to api stuff
       // this.ns.createArticle(this.tmpArticle);
       this.ns.createArticle(this.tmpArticle).subscribe(article => {
+        
           if(article === this.tmpArticle) {
-            alert('The operation was successful!');
-            // this.router.navigate(['/articles-list']);
+            window.alert('The operation was successful!');
+            this.router.navigate(['/articles-list']);
           }
-          else
-            alert('There was an issue somewhere');
+          else {
+            window.alert('There was an issue somewhere');
           
-          // this.router.navigate(['/articles-list']);
-      });
+          this.router.navigate(['/articles-list']);
+          }
+
+          
+      }, err => {
+        console.log(err);
+        console.log('jfdbybfasi');
+        // maybe adding the picture solves this situation
+      }
+      );
       
     }
     else {

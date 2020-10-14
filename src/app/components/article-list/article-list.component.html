@@ -85,10 +85,10 @@
             <div class="card bg-light" *ngIf="!fakeDelete[article.id]; else onDelete">
                 <!-- <img class="card-img-top" src="..." alt="Card image cap"/> -->
                 <img class="card-img-top" 
-                    (change)="fileChangeEvent($event)" 
-                    (click)="viewArticle(article.id)" 
-                    [src]="'data:' + article.thumbnail_media_type + ';base64,' + article.thumbnail_data "/>
+                (click)="viewArticle(article.id)" 
+                [src]="'data:' + article.thumbnail_media_type + ';base64,' + article.thumbnail_image "/>
                 <!-- <input type="file" (change)="fileChangeEvent($event)"> -->
+                <!-- (change)="fileChangeEvent($event)" -->
                 <!-- <img class="card-img-top" [src]="imagePath[article.id]"/> -->
                 
                 <!-- Temporary, WIP -->

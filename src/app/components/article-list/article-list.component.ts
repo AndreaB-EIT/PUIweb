@@ -33,6 +33,10 @@ export class ArticleListComponent implements OnInit {
   public isImageSaved: boolean;
   public cardImageBase64: string;
 
+  // clean up the code
+  // separate login component
+  // better styling
+
   constructor(private ns: NewsService, 
               private router: Router,
               private ls: LoginService) { }
@@ -84,7 +88,8 @@ export class ArticleListComponent implements OnInit {
   newArticle(): void {
     this.ns.tmpArticle = {
       id: this.firstAvailableId(),
-      id_user: 'username', // temporary
+      id_user: null,
+      // id_user: this.user.username, // remove this field?
       abstract: '',
       subtitle: '',
       body: '',
@@ -158,9 +163,9 @@ export class ArticleListComponent implements OnInit {
   }
   
   // WIP Images loading
-  
-  fileChangeEvent(fileInput: any, art: Article) {
-    this.article = art;
+  // only for editing
+  fileChangeEvent(fileInput: any) {
+    // this.article = art;
     console.log(this.article);
       this.imageError = null;
       if (fileInput.target.files && fileInput.target.files[0]) {
