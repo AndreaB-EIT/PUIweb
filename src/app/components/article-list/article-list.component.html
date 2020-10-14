@@ -85,7 +85,8 @@
             <div class="card bg-light" *ngIf="!fakeDelete[article.id]; else onDelete">
                 <!-- <img class="card-img-top" src="..." alt="Card image cap"/> -->
                 <img class="card-img-top" 
-                    (change)="fileChangeEvent($event)"
+                    (change)="fileChangeEvent($event)" 
+                    (click)="viewArticle(article.id)" 
                     [src]="'data:' + article.thumbnail_media_type + ';base64,' + article.thumbnail_data "/>
                 <!-- <input type="file" (change)="fileChangeEvent($event)"> -->
                 <!-- <img class="card-img-top" [src]="imagePath[article.id]"/> -->
@@ -96,14 +97,15 @@
                 <div class="card-body">
                     <p class="card-text"><b>{{ article.category }}</b></p>
                     <h4 class="card-title"><a (click)="viewArticle(article.id)">{{ article.title }}</a></h4>
-                    <p class="card-text" (click)="fileChangeEvent($event, article)">{{ article.subtitle }}</p>
+                    <p class="card-text">{{ article.subtitle }}</p>
                     <hr>
                     <p class="card-text" [innerHTML]="article.abstract"></p>
                     <hr>
                     <p class="card-text">Last updated by {{ article.id_user }} on {{ article.update_date }}</p>
                     <div *ngIf="logged">
                         <button (click)="editArticle(article.id)" class="btn btn-primary mr-2">Edit article</button>
-                        <button (click)="askConfirmation[article.id] = !askConfirmation[article.id]" class="btn btn-danger">Remove article</button>
+                        <button *ngIf="!askConfirmation[article.id]" (click)="askConfirmation[article.id] = !askConfirmation[article.id]" class="btn btn-danger">Remove article</button>
+                        <button *ngIf="askConfirmation[article.id]" (click)="askConfirmation[article.id] = !askConfirmation[article.id]" class="btn btn-primary">Nevermind</button>
                         <div class="input-group mt-2" *ngIf="askConfirmation[article.id]">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Are you sure?</span>

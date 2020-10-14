@@ -6,6 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { User } from 'src/app/interfaces/user';
 import { LoginService } from 'src/app/services/login.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-article-list',
@@ -172,10 +173,10 @@ export class ArticleListComponent implements OnInit {
           'Maximum size allowed is ' + MAX_SIZE / 1000 + 'Mb';
         return false;
       }
-      // if (!_.includes(ALLOWED_TYPES, fileInput.target.files[0].type)) {
-      //   this.imageError = 'Only Images are allowed ( JPG | PNG )';
-      //   return false;
-      // }
+      if (!_.includes(ALLOWED_TYPES, fileInput.target.files[0].type)) {
+        this.imageError = 'Only Images are allowed ( JPG | PNG )';
+        return false;
+      }
       const reader = new FileReader();
       reader.onload = (e: any) => {
         const image = new Image();
