@@ -20,13 +20,17 @@ export class ArticleListComponent implements OnInit {
   public categoryFilter = 'All';
   public isMenuCollapsed = true;
   public askConfirmation = [];
+  public fakeDelete = [];
   public downloadComplete = false;
   public un = '';
   public pw = '';
   public logged = false;
   public user: User;
   // public imagePaths = [];
-  // public imageError: string;
+  public article: Article; // including the elements of the articles
+  public imageError: string;
+  public isImageSaved: boolean;
+  public cardImageBase64: string;
 
   constructor(private ns: NewsService, 
               private router: Router,
@@ -35,12 +39,15 @@ export class ArticleListComponent implements OnInit {
   ngOnInit(): void {
 
     this.user = this.ls.getUser();
+    this.logged = this.ls.isLogged();
 
     this.ns.articlesList.subscribe(articles => {
       this.articlesList = articles;
 
-      for(let i = 0; i < this.articlesList.length; i++)
+      for(let i = 0; i < this.articlesList.length; i++) {
         this.askConfirmation.push(false);
+        this.fakeDelete.push(false);
+      }
 
       this.downloadComplete = true;
     });
@@ -95,9 +102,12 @@ export class ArticleListComponent implements OnInit {
     // this.articlesList[this.findArticleInList(id)].is_deleted = 1;
     if(typeof id === 'string')
       id = parseInt(id);
-
+      
     this.ns.deleteArticle(id).subscribe(output => {
       console.log(output);
+
+      if(output === null)
+        this.fakeDelete[id] = true;
     });
   }
   
@@ -125,23 +135,14 @@ export class ArticleListComponent implements OnInit {
   signIn(): void {
     
     this.ls.login(this.un, this.pw).subscribe(WonderOfU => {
-      this.user = WonderOfU; // https://jojo.fandom.com/wiki/Wonder_of_U
-      
+      this.user = WonderOfU; // https://bit.ly/2Fkxub1
+      this.ns.setUserApiKey(this.user.apikey);
       if(this.ls.isLogged())
         this.logged = true;
       else {
         alert('Wrong username or password!');
       }
     });
-
-    // this.user = {
-    //   apikey: "xxx",
-    //   username: "test_username",
-    //   password: "test_pw"
-    // };
-
-    // this.logged = true;
-    // this.ls.user = this.user;
     
   }
   
@@ -151,43 +152,47 @@ export class ArticleListComponent implements OnInit {
     this.logged = false;
     this.user = null;
 
+    this.ns.setAnonymousApiKey();
+
   }
   
   // WIP Images loading
   
-  // fileChangeEvent(fileInput: any) {
-  //     this.imageError = null;
-  //     if (fileInput.target.files && fileInput.target.files[0]) {
-  //         // Size Filter Bytes
-  //     const MAX_SIZE = 20971520;
-  //     const ALLOWED_TYPES = ['image/png', 'image/jpeg'];
+  fileChangeEvent(fileInput: any, art: Article) {
+    this.article = art;
+    console.log(this.article);
+      this.imageError = null;
+      if (fileInput.target.files && fileInput.target.files[0]) {
+          // Size Filter Bytes
+      const MAX_SIZE = 20971520;
+      const ALLOWED_TYPES = ['image/png', 'image/jpeg'];
 
-  //     if (fileInput.target.files[0].size > MAX_SIZE) {
-  //       this.imageError =
-  //         'Maximum size allowed is ' + MAX_SIZE / 1000 + 'Mb';
-  //       return false;
-  //     }
-  //     if (!_.includes(ALLOWED_TYPES, fileInput.target.files[0].type)) {
-  //       this.imageError = 'Only Images are allowed ( JPG | PNG )';
-  //       return false;
-  //     }
-  //     const reader = new FileReader();
-  //     reader.onload = (e: any) => {
-  //       const image = new Image();
-  //       image.src = e.target.result;
-  //       image.onload = rs => {
-  //         const imgBase64Path = e.target.result;
-  //         this.cardImageBase64 = imgBase64Path;
-  //         this.isImageSaved = true;
+      if (fileInput.target.files[0].size > MAX_SIZE) {
+        this.imageError =
+          'Maximum size allowed is ' + MAX_SIZE / 1000 + 'Mb';
+        return false;
+      }
+      // if (!_.includes(ALLOWED_TYPES, fileInput.target.files[0].type)) {
+      //   this.imageError = 'Only Images are allowed ( JPG | PNG )';
+      //   return false;
+      // }
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const image = new Image();
+        image.src = e.target.result;
+        image.onload = rs => {
+          const imgBase64Path = e.target.result;
+          this.cardImageBase64 = imgBase64Path;
+          this.isImageSaved = true;
 
-  //         this.article.image_media_type = fileInput.target.files[0].type;
-  //         const head = this.article.image_media_type.length + 13;
-  //         this.article.image_data = e.target.result.substring(head, e.target.result.length);
+          this.article.image_media_type = fileInput.target.files[0].type;
+          const head = this.article.image_media_type.length + 13;
+          this.article.image_data = e.target.result.substring(head, e.target.result.length);
 
-  //       };
-  //     };
-  //     reader.readAsDataURL(fileInput.target.files[0]);
-  //   }
-  // }
+        };
+      };
+      reader.readAsDataURL(fileInput.target.files[0]);
+    }
+  }
 
 }

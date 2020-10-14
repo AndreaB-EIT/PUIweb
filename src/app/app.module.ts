@@ -9,7 +9,6 @@ import {HttpClientModule} from '@angular/common/http';
 import { ArticleDetailsComponent } from './components/article-details/article-details.component';
 import { ArticleEditionComponent } from './components/article-edition/article-edition.component';
 import { ArticleListComponent } from './components/article-list/article-list.component';
-import { LoginComponent } from './components/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { CategoryPipePipe } from './pipes/category-pipe.pipe';
 import { registerLocaleData } from '@angular/common';
@@ -22,7 +21,6 @@ registerLocaleData(localeEs);
     ArticleDetailsComponent,
     ArticleEditionComponent,
     ArticleListComponent,
-    LoginComponent,
     CategoryPipePipe
   ],
   imports: [

@@ -22,6 +22,7 @@ export class NewsService {
 
   // Set the corresponding APIKEY accordig to the received by email
   private APIKEY: string;
+  // private APIKEY_ANON = 'DEV_TEAM_4414';
   private APIKEY_ANON = 'GROMANAPIKEY99';
 
   private httpOptions = {
@@ -160,7 +161,7 @@ export class NewsService {
   //       break;
   //     }
   //     default: {
-  //       alert('I probably was NOT drunk while coding this if this just happened');
+  //       alert('Error: ' + err);
   //       break;
   //     }
   //   }

@@ -10,8 +10,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 export class LoginService {
 
-  public user: User; // CHANGE BACK TO PRIVATE ONCE THE 401 IS NOT AN ISSUE ANYMORE
-
+  private user: User;
+  
   private loginUrl = 'http://sanger.dia.fi.upm.es/pui-rest-news/login';
 
   private message: string;
@@ -38,12 +38,12 @@ export class LoginService {
       }), catchError(err => {
         // WIP
         switch (err.status) {
-        //   case 401: {
-        //     alert('Wrong username or password!');
-        //   }
-        //   case 404: {
-        //     alert('Not found!');
-        //   }
+          case 401: {
+            alert('Wrong username or password!');
+          }
+          case 404: {
+            alert('Not found!');
+          }
           default: {
             alert(err.message);
           }
