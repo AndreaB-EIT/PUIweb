@@ -59,6 +59,9 @@ export class ArticleListComponent implements OnInit {
     this.ns.getArticle(id).subscribe(article => {
       this.ns.tmpArticle = article;
       this.router.navigate(['/edit']);
+    }, err => {
+      alert("We are sorry, but " + err.error.details.toLowerCase());
+      
     });
   }
   

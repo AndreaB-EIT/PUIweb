@@ -1,18 +1,18 @@
 <div class="container-fluid">
     <div *ngIf="!logged">
-        <div class="my-4">
+        <div class="my-3">
             <h4>Login</h4>
             <div class="input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text border-dark">Username</span>
+                    <span class="input-group-text border-dark" style="background-color: rgb(195, 230, 245);">Username</span>
                 </div>
                 <input type="text" [(ngModel)]="un" name="un"/>
             </div>
         </div>
-        <div class="my-4">
+        <div class="my-3">
             <div class="input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text border-dark">Password</span>
+                    <span class="input-group-text border-dark" style="background-color: rgb(195, 230, 245);">Password</span>
                 </div>
                 <input type="password" [(ngModel)]="pw" name="pw"/>
             </div>
@@ -20,7 +20,7 @@
         <button class="btn btn-primary" (click)="signIn()">Sign in</button>
     </div>
     <div *ngIf="logged">
-        Hello {{ user.username }}
+        <h5>Hello {{ user.username }}!</h5>
         <button class="btn btn-primary ml-2" (click)="signOut()">Sign out</button>
     </div>
 </div>
