@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../interfaces/user';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
@@ -14,7 +14,9 @@ export class LoginService {
   
   private loginUrl = 'http://sanger.dia.fi.upm.es/pui-rest-news/login';
 
-  private message: string;
+  // private message: string;
+  
+  public logged = new Subject<boolean>();
 
   private httpOptions = {
     headers: new HttpHeaders()
@@ -22,6 +24,10 @@ export class LoginService {
   };
 
   constructor(private http: HttpClient) { }
+
+  emitLogin(value) {
+    this.logged.next(value);
+  }
 
   isLogged() {
     return this.user != null;
@@ -35,6 +41,8 @@ export class LoginService {
     return this.http.post<User>(this.loginUrl, usereq).pipe(
       tap(user => {
         this.user = user;
+        // this.logged = true;
+        this.emitLogin(true);
       }), catchError(err => {
         // WIP
         console.log(err.status);
@@ -64,6 +72,8 @@ export class LoginService {
 
   logout() {
     this.user = null;
+    this.emitLogin(false);
+    // this.logged = false;
   }
 
 

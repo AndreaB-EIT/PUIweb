@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { CategoryPipePipe } from './pipes/category-pipe.pipe';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
+import { LoginComponent } from './components/login/login.component';
 registerLocaleData(localeEs);
 
 @NgModule({
@@ -21,7 +22,8 @@ registerLocaleData(localeEs);
     ArticleDetailsComponent,
     ArticleEditionComponent,
     ArticleListComponent,
-    CategoryPipePipe
+    CategoryPipePipe,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

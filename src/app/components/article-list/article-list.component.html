@@ -3,29 +3,7 @@
         <h1>
             EIT Newspaper
         </h1>
-        <div class="container-fluid">
-            <div *ngIf="!logged">
-                <div class="mr-auto p-2">
-                </div>
-                <div class="p-2">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text border-dark">Username</span>
-                        </div>
-                        <input type="text" [(ngModel)]="un" name="un"/>
-                        <div class="input-group-prepend ml-2">
-                            <span class="input-group-text border-dark">Password</span>
-                        </div>
-                        <input type="password" [(ngModel)]="pw" name="pw"/>
-                        <button class="btn btn-primary ml-2" (click)="signIn()">Sign in</button>
-                    </div>
-                </div>
-            </div>
-            <div *ngIf="logged">
-                Hello {{ user.username }}
-                <button class="btn btn-primary ml-2" (click)="signOut()">Sign out</button>
-            </div>
-        </div>
+        <app-login></app-login>
     </div>
 
     <div class="container-fluid">
