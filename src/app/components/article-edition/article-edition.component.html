@@ -96,6 +96,7 @@
               </div> -->
             </div>
         </form>
+        <h2 class="mt-5 mb-3">Live preview</h2>
         <hr>
         <div>
     
@@ -106,7 +107,7 @@
               {{ tmpArticle.title }}
           </h1>
           <h4 [innerHTML]="tmpArticle.subtitle"></h4>
-          <img class="img-fluid" [src]="'data:' + tmpArticle.image_media_type + ';base64,' + tmpArticle.image_data "/>
+          <img class="img-fluid my-3" [src]="'data:' + tmpArticle.image_media_type + ';base64,' + tmpArticle.image_data "/>
           <b><p [innerHTML]="tmpArticle.abstract"></p></b>
           <p [innerHTML]="tmpArticle.body"></p>    
         </div>

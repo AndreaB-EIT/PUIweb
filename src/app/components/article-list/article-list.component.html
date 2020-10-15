@@ -7,6 +7,7 @@
     </div>
 
     <div class="container-fluid">
+        
         <div *ngIf="downloadComplete" class="mb-4">
             <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3 border">
                 <h3 class="navbar-brand">Functions</h3>
@@ -61,17 +62,9 @@
         <div class="col-lg-4 col-md-6 col-12 my-3" 
             *ngFor='let article of articlesList | categoryPipe:categoryFilter | filter:term'>
             <div class="card bg-light" *ngIf="!fakeDelete[article.id]; else onDelete">
-                <!-- <img class="card-img-top" src="..." alt="Card image cap"/> -->
                 <img class="card-img-top" 
                 (click)="viewArticle(article.id)" 
                 [src]="'data:' + article.thumbnail_media_type + ';base64,' + article.thumbnail_image "/>
-                <!-- <input type="file" (change)="fileChangeEvent($event)"> -->
-                <!-- (change)="fileChangeEvent($event)" -->
-                <!-- <img class="card-img-top" [src]="imagePath[article.id]"/> -->
-                
-                <!-- Temporary, WIP -->
-                <!-- <img src="../../../assets/EITLogo.png" class="card-img-top img-fluid" alt="test" (click)="viewArticle(article.id)"/> -->
-
                 <div class="card-body">
                     <p class="card-text"><b>{{ article.category }}</b></p>
                     <h4 class="card-title"><a (click)="viewArticle(article.id)">{{ article.title }}</a></h4>

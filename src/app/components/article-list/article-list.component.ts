@@ -31,6 +31,7 @@ export class ArticleListComponent implements OnInit {
               private ls: LoginService) {
                 this.ls.logged.subscribe(value => {
                   this.logged = value;
+                  
                 })
               }
 
@@ -46,7 +47,6 @@ export class ArticleListComponent implements OnInit {
       }
 
       this.downloadComplete = true;
-      // make it change a progress bar?
     });
   }
 
