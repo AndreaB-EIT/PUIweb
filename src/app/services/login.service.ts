@@ -13,8 +13,6 @@ export class LoginService {
   private user: User;
   
   private loginUrl = 'http://sanger.dia.fi.upm.es/pui-rest-news/login';
-
-  // private message: string;
   
   public logged = new Subject<boolean>();
 

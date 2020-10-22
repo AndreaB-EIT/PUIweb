@@ -21,11 +21,6 @@ export class ArticleListComponent implements OnInit {
   public downloadComplete = false;
   public logged: boolean;
 
-  // make it possible to be able to edit pictures (upload from hard disk) - Done!
-  // clean up the code
-  // separate login component - Done!
-  // better styling
-
   constructor(private ns: NewsService, 
               private router: Router,
               private ls: LoginService) {

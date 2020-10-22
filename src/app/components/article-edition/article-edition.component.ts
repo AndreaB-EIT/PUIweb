@@ -45,10 +45,6 @@ export class ArticleEditionComponent implements OnInit {
     this.tmpArticle.update_date = formatDate(now, 'yyyy-MM-dd HH:mm:ss', 'es');
 
     if(this.isItNew) {
-      this.tmpArticle.image_data = '';
-      this.tmpArticle.image_media_type = '';
-      this.tmpArticle.thumbnail_image = '';
-      this.tmpArticle.thumbnail_media_type = '';
 
       // todo: better error management
       this.ns.createArticle(this.tmpArticle).subscribe(article => {
@@ -61,13 +57,12 @@ export class ArticleEditionComponent implements OnInit {
             window.alert('There was an issue somewhere');
           
           this.router.navigate(['/articles-list']);
-          }
-
-          
+        }
+        
+        
       }, err => {
         console.log(err);
-        console.log('jfdbybfasi');
-        // maybe adding the picture solves this situation
+        alert(err);
       }
       );
       
