@@ -23,7 +23,6 @@ export class NewsService {
   // Set the corresponding APIKEY accordig to the received by email
   private APIKEY: string;
   private APIKEY_ANON = 'DEV_TEAM_4414';
-  // private APIKEY_ANON = 'GROMANAPIKEY99';
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -98,54 +97,12 @@ export class NewsService {
   updateArticle(article: Article): Observable<Article> {
     console.log('Updating article id=' + article.id);
     return this.http.post<Article>(this.articleUrl, article, this.httpOptions);
-    // return this.http.post<Article>(this.articleUrl, article, this.httpOptions).pipe(
-    //   tap(out => {
-    //     console.log(out);
-    //   }),
-    //   catchError(err => {
-    //     console.log(err.status)
-    //     switch (err.status) {
-    //       case 401: {
-    //         alert('Wrong username or password!');
-    //       }
-    //       case 404: {
-    //         alert('Not found!');
-    //       }
-    //       default: {
-    //         alert(err.message);
-    //       }
-    //     }
-    //     // alert(err.message);
-    //     return throwError(err);
-    //   })
-    // );
   }
 
   createArticle(article: Article): Observable<Article> {
     console.log('Creating article');
     console.log(article);
     return this.http.post<Article>(this.articleUrl, this.fix(article), this.httpOptions);
-    // return this.http.post<Article>(this.articleUrl, article, this.httpOptions).pipe(
-    //   tap(out => {
-    //     console.log(out);
-    //   }),
-    //   catchError(err => {
-    //     console.log(err.status)
-    //     switch (err.status) {
-    //       case 401: {
-    //         alert('Wrong username or password!');
-    //       }
-    //       case 404: {
-    //         alert('Not found!');
-    //       }
-    //       default: {
-    //         alert(err.message);
-    //       }
-    //     }
-    //     // alert(err.message);
-    //     return throwError(err);
-    //   })
-    // );
   }
 
   fix(article: Article): Article {
@@ -153,17 +110,4 @@ export class NewsService {
     delete article.id_user;
     return article;
   }
-
-  // handleError(err): void {
-  //   switch(err) {
-  //     case 'deleteHero': {
-  //       alert('Error: ' + err);
-  //       break;
-  //     }
-  //     default: {
-  //       alert('Error: ' + err);
-  //       break;
-  //     }
-  //   }
-  // }
 }

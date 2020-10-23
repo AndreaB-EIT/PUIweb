@@ -32,7 +32,6 @@ registerLocaleData(localeEs);
     HttpClientModule,
     FormsModule,
     NgbModule
-    //NgbModule.forRoot()
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'es-ES' },

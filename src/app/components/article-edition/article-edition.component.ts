@@ -46,63 +46,24 @@ export class ArticleEditionComponent implements OnInit {
 
     if(this.isItNew) {
 
-      // todo: better error management
       this.ns.createArticle(this.tmpArticle).subscribe(article => {
-        
-          if(article === this.tmpArticle) {
-            window.alert('The operation was successful!');
-            this.router.navigate(['/articles-list']);
-          }
-          else {
-            window.alert('There was an issue somewhere');
-          
-          this.router.navigate(['/articles-list']);
-        }
-        
-        
+        console.log(article);
+        this.router.navigate(['/articles-list']);
       }, err => {
         console.log(err);
         alert(err);
-      }
-      );
+      });
       
     }
     else {
-      this.ns.updateArticle(this.tmpArticle).subscribe(article => {
-          // if(article === this.tmpArticle) {
-          //   alert('The operation was successful!');
-          //   this.router.navigate(['/articles-list']);
-          // }
-          // else
-          //   alert('There was an issue somewhere');
-          
+      this.ns.updateArticle(this.tmpArticle).subscribe(article => {          
           this.router.navigate(['/articles-list']);
+      }, err => {
+        console.log(err);
+        alert(err);
       });
-      // this.ns.updateArticle(this.tmpArticle).subscribe(output => {
-      //     switch (output.status) {
-      //       case 200: {
-      //         alert('The operation was successful!');
-      //       }
-      //       default: {
-      //         console.log('output')
-      //       }
-      //     } 
-      // });
       
-
-      //this.router.navigate(['/articles-list']);
     }
-
-    // this.router.navigate(['/articles-list']);
-
-    // this.ns.getArticle(this.tmpArticle.id).subscribe(article => {
-    //   if(article === this.tmpArticle) {
-    //     alert('The operation was successful!');
-    //     this.router.navigate(['/articles-list']);
-    //   }
-    //   else
-    //     alert('There was an issue somewhere');
-    // })
   }
 
   goBack(): void {
@@ -110,7 +71,6 @@ export class ArticleEditionComponent implements OnInit {
     this.location.back();
   }
 
-  // WIP Images loading
   // only for editing
   fileChangeEvent(fileInput: any) {
     this.newPic = true;
