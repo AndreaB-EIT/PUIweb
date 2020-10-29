@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { Article } from '../interfaces/article';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { LoginService } from './login.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +12,6 @@ export class NewsService {
   private newsUrl = 'http://sanger.dia.fi.upm.es/pui-rest-news/articles';  // URL to web api
   private articleUrl = 'http://sanger.dia.fi.upm.es/pui-rest-news/article';  // URL to web api
 
-  public articlesList = this.getArticles();
-  public tmpArticle: Article; // when editing/creating an article
-  public tmpViewArticle: Observable<Article>; // when viewing an article's details
-  
   constructor(private http: HttpClient) { }
 
   // Set the corresponding APIKEY accordig to the received by email
@@ -30,10 +24,6 @@ export class NewsService {
       Authorization: 'PUIRESTAUTH apikey=' + this.APIKEY_ANON
     })
   };
-
-  viewArticle(id: number): void {
-    this.tmpViewArticle = this.getArticle(id);
-  }
 
   // Modifies the APIKEY with the received value
   setUserApiKey(apikey: string): void {
@@ -65,8 +55,6 @@ export class NewsService {
     return this.http.get<Article[]>(this.newsUrl, this.httpOptions);
   }
 
-  // PROTIP: ANY LOGGED USER CAN EDIT AND DELETE ANY ARTICLE
-
   deleteArticle(article: Article | number): Observable<Article> {
     const id = typeof article === 'number' ? article : article.id;
     const url = `${this.articleUrl}/${id}`;
@@ -75,7 +63,6 @@ export class NewsService {
     //   catchError(this.handleError('deleteHero'))
     // );;
   }
-
 
   // Returns an article which contains the following elements:
   // {"id":...,

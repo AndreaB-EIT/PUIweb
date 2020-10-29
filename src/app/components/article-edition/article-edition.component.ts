@@ -33,11 +33,37 @@ export class ArticleEditionComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
-    if(!this.ls.isLogged())
-      this.router.navigate(['/articles-list']);
+    if(!this.ls.isLogged()) // if a user is trying to edit without being logged
+      this.router.navigate(['/']);
 
-    this.tmpArticle = this.ns.tmpArticle;
-    this.isItNew = this.tmpArticle.category === '';
+    let tmp = localStorage.getItem("toEdit");
+    console.log("Receiving: " + tmp);
+
+    if(tmp == null) // if there is nothing to edit (e.g. no new article, no previous edit)
+      this.router.navigate(['/']);
+    else if(tmp === "new")
+    {
+      this.tmpArticle = {
+        id: -1,
+        id_user: null,
+        abstract: '',
+        subtitle: '',
+        body: '',
+        update_date: '',
+        category: '',
+        title: '',
+        image_data: '',
+        image_media_type: '',
+        thumbnail_image: '',
+        thumbnail_media_type: ''
+      };
+      this.isItNew = true;
+    }
+    else
+      this.ns.getArticle(parseInt(tmp)).subscribe(article => {
+        this.tmpArticle = article;
+        this.isItNew = false;
+    });
   }
 
   submitArticle(): void {
@@ -48,7 +74,7 @@ export class ArticleEditionComponent implements OnInit {
 
       this.ns.createArticle(this.tmpArticle).subscribe(article => {
         console.log(article);
-        this.router.navigate(['/articles-list']);
+        this.router.navigate(['/']);
       }, err => {
         console.log(err);
         alert(err);
@@ -57,7 +83,7 @@ export class ArticleEditionComponent implements OnInit {
     }
     else {
       this.ns.updateArticle(this.tmpArticle).subscribe(article => {          
-          this.router.navigate(['/articles-list']);
+          this.router.navigate(['/']);
       }, err => {
         console.log(err);
         alert(err);

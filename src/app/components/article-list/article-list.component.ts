@@ -33,7 +33,7 @@ export class ArticleListComponent implements OnInit {
   ngOnInit(): void {
     this.logged = this.ls.isLogged();
 
-    this.ns.articlesList.subscribe(articles => {
+    this.ns.getArticles().subscribe(articles => {
       this.articlesList = articles;
 
       for(let i = 0; i < this.articlesList.length; i++) {
@@ -46,36 +46,20 @@ export class ArticleListComponent implements OnInit {
   }
 
   viewArticle(id: number): void {
-    this.ns.viewArticle(id);
+    localStorage.setItem("toView", id.toString());
+    console.log("Sending: " + localStorage.getItem("toView"));
     this.router.navigate(['/article']);
   }
   
   editArticle(id: number): void {
-    this.ns.getArticle(id).subscribe(article => {
-      this.ns.tmpArticle = article;
-      this.router.navigate(['/edit']);
-    }, err => {
-      alert("We are sorry, but " + err.error.details.toLowerCase());
-      
-    });
+    localStorage.setItem("toEdit", id.toString());
+    console.log("Sending: " + localStorage.getItem("toEdit"));
+    this.router.navigate(['/edit']);
   }
   
   newArticle(): void {
-    this.ns.tmpArticle = {
-      id: this.firstAvailableId(),
-      id_user: null,
-      // id_user: this.user.username, // remove this field?
-      abstract: '',
-      subtitle: '',
-      body: '',
-      update_date: '',
-      category: '',
-      title: '',
-      image_data: '',
-      image_media_type: '',
-      thumbnail_image: '',
-      thumbnail_media_type: ''
-    };
+    localStorage.setItem("toEdit", "new");
+    console.log("Sending: " + localStorage.getItem("toEdit"));
     this.router.navigate(['/edit']);
   }
   

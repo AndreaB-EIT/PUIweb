@@ -37,13 +37,10 @@ export class LoginComponent implements OnInit {
   }
   
   signOut(): void {
-    
     this.ls.logout();
     this.logged = false;
     this.user = null;
-
     this.ns.setAnonymousApiKey();
-
   }
 
 }
